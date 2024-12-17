@@ -216,23 +216,23 @@ jobs:
             dependency-check-results
             tomcat-logs
 
-  notify:
-    needs: [semgrep, zap_scan, dependency_check]
-    runs-on: ubuntu-latest
-    if: always()
-    steps:
-      - name: Send notification
-        uses: nvdaes/github-action-workflow-notification@v1
-        with:
-          notification_title: 'Security Scan Results'
-          notification_body: |
-            Security scan completed for ${{github.repository}}
+  # notify:
+  #   needs: [semgrep, zap_scan, dependency_check]
+  #   runs-on: ubuntu-latest
+  #   if: always()
+  #   steps:
+  #     - name: Send notification
+  #       uses: nvdaes/github-action-workflow-notification@v1
+  #       with:
+  #         notification_title: 'Security Scan Results'
+  #         notification_body: |
+  #           Security scan completed for ${{github.repository}}
             
-            Results summary:
-            - Semgrep scan: ${{needs.semgrep.result}}
-            - ZAP scan: ${{needs.zap_scan.result}}
-            - Dependency check: ${{needs.dependency_check.result}}
+  #           Results summary:
+  #           - Semgrep scan: ${{needs.semgrep.result}}
+  #           - ZAP scan: ${{needs.zap_scan.result}}
+  #           - Dependency check: ${{needs.dependency_check.result}}
             
-            Check full results here:
-            ${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}
-          notification_type: 'email'
+  #           Check full results here:
+  #           ${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}
+  #         notification_type: 'email'
