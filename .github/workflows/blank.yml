@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v3
         with:
@@ -39,7 +39,7 @@ jobs:
 
   semgrep:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     container:
       image: returntocorp/semgrep:latest
     steps:
@@ -76,7 +76,7 @@ jobs:
       #     delete-branch: true
           
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: reports/semgrep-results.sarif
 
@@ -90,7 +90,7 @@ jobs:
 
   zap_scan:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v3
 
@@ -148,7 +148,7 @@ jobs:
   
   dependency_check:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v3
       
@@ -178,7 +178,7 @@ jobs:
 
   publish_security_reports:
     needs: [semgrep, zap_scan, dependency_check]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Create reports directory
         run: mkdir -p combined-reports
@@ -204,7 +204,7 @@ jobs:
   cleanup:
     needs: publish_security_reports
     if: always()
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Remove temporary artifacts
         uses: geekyeggo/delete-artifact@v2
@@ -218,7 +218,7 @@ jobs:
 
   # notify:
   #   needs: [semgrep, zap_scan, dependency_check]
-  #   runs-on: ubuntu-latest
+  #   runs-on: ubuntu-24.04
   #   if: always()
   #   steps:
   #     - name: Send notification
