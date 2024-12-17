@@ -175,6 +175,7 @@ jobs:
           name: dependency-check-results
           path: reports/dependency-check-report.html
           retention-days: 14
+          run: ls -lR
 
   publish_security_reports:
     needs: [semgrep, zap_scan, dependency_check]
@@ -207,7 +208,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Remove temporary artifacts
-        uses: geekyeggo/delete-artifact@v2
+        uses: geekyeggo/delete-artifact@v4
         with:
           name: |
             webapp
