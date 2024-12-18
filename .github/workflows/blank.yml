@@ -223,10 +223,11 @@ jobs:
     if: always()
     steps:
       - name: Send notification
-        uses: nvdaes/github-action-workflow-notification@v1
+        uses: appleboy/telegram-action@master
         with:
-          notification_title: 'Security Scan Results'
-          notification_body: |
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          message:  |
             Security scan completed for ${{github.repository}}
             
             Results summary:
